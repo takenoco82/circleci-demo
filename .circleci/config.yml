@@ -1,16 +1,11 @@
 version: 2
 jobs:
   build:
-    environment:
-      AP_REPOSITORY: circleci-demo
-      AP_TAG: test
-    docker:
-      - image: circleci/buildpack-deps:stretch
+    machine:
+      image: circleci/buildpack-deps:stretch
+      docker_layer_caching: true
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 18.06.0-ce
-          docker_layer_caching: true
       - run:
           name: Build Docker image
-          command: docker build -t ${AP_REPOSITORY}:${AP_TAG} .
+          command: docker-compose build
